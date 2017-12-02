@@ -18,7 +18,7 @@ class HomeViewController: BaseViewController,UISearchBarDelegate, UICollectionVi
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "HOME"
-//        movieCollectionView.dataSource = self
+        movieCollectionView.dataSource = self
         
     }
     
@@ -38,15 +38,22 @@ class HomeViewController: BaseViewController,UISearchBarDelegate, UICollectionVi
         } else {
             movieList.removeAll()
             movieName = searchBar.text!
-//            webService.getMovieList(name: movieName, page: page, completion: { (arg0) in
-//                if let arg = arg0 as? (Int,[Movie]) {
-//                    self.total_pages = arg.0
-//                    self.movieList = arg.1
-//                    DispatchQueue.main.async {
-//                        self.movieCollectionView.reloadData()
-//                    }
-//                }
-//            })
+       if searchBar.text?.count == 0 {
+           print("Enter Movie Name")
+       } else {
+           movieList.removeAll()
+           movieName = searchBar.text!
+          webService.getMovieList(name: movieName, page: page, completion: { (arg0) in
+                if let arg = arg0 as? (Int,[Movie]) {
+                   self.total_pages = arg.0
+                    self.movieList = arg.1
+                    DispatchQueue.main.async {
+                        self.movieCollectionView.reloadData()
+                    }
+                }
+            })
+
+       }
         }
     }
 
