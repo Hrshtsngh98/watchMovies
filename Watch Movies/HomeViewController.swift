@@ -17,8 +17,8 @@ class HomeViewController: BaseViewController,UISearchBarDelegate, UICollectionVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        title = "HOME"
-//        movieCollectionView.dataSource = self
+        title = "HOME"
+        movieCollectionView.dataSource = self
         
     }
     
@@ -33,21 +33,28 @@ class HomeViewController: BaseViewController,UISearchBarDelegate, UICollectionVi
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-//        if searchBar.text?.count == 0 {
-//            print("Enter Movie Name")
-//        } else {
-//            movieList.removeAll()
-//            movieName = searchBar.text!
-//            webService.getMovieList(name: movieName, page: page, completion: { (arg0) in
-//                if let arg = arg0 as? (Int,[Movie]) {
-//                    self.total_pages = arg.0
-//                    self.movieList = arg.1
-//                    DispatchQueue.main.async {
-//                        self.movieCollectionView.reloadData()
-//                    }
-//                }
-//            })
-//        }
+        if searchBar.text?.count == 0 {
+            print("Enter Movie Name")
+        } else {
+            movieList.removeAll()
+            movieName = searchBar.text!
+       if searchBar.text?.count == 0 {
+           print("Enter Movie Name")
+       } else {
+           movieList.removeAll()
+           movieName = searchBar.text!
+          webService.getMovieList(name: movieName, page: page, completion: { (arg0) in
+                if let arg = arg0 as? (Int,[Movie]) {
+                   self.total_pages = arg.0
+                    self.movieList = arg.1
+                    DispatchQueue.main.async {
+                        self.movieCollectionView.reloadData()
+                    }
+                }
+            })
+
+       }
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
